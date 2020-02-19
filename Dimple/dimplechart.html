@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+<!--   D3 is always loaded before dimple as dimple is built on top of D3/references D3 funcctions
+  here we are referencing the javascript files that are available on the web
+  if you do not have web access you will have to reference the files in your project sfile structure as we did in the first tutorial -->
+  <script src="http://d3js.org/d3.v3.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.0.0.js"></script>
+
+    <script type="text/javascript">
+		var interval;
+		function autoPlay()
+		{
+			interval = setInterval(function() {
+				nextYear();
+			}, 1000);
+		}
+
+		function stopTimer()
+		{
+		   clearInterval(interval);
+		}
+
+		function stop()
+		{
+			play = 0;
+		}
+
+		var year = "2008";
+		function nextYear()
+		{
+			year = document.getElementById("CurrentYear").innerHTML;
+			var newYear = parseInt(year);
+
+			//Rotate years between specified dates
+			if(newYear >= 2018)
+			{
+				newYear = 2008;
+			}
+			else
+			{
+				newYear++;
+			}
+
+			year = newYear.toString();
+			document.getElementById("CurrentYear").innerHTML = year;
+
+			d3.tsv("crime.txt", draw);
+		}
+
+      function draw(data) {
+		"use strict";
+
+		if(svg !== null)
+		{
+			d3.select("svg").remove();
+		}
+
+
+		var margin = 75,
+			width = 1400 - margin,
+            height = 750 - margin;
+
+         //svg element to page
+        var svg = d3.select("body")
+            .append("svg")
+			.attr("width", width + margin)
+            .attr("height", height + margin)
+            .append('g')//http://tutorials.jenkov.com/svg/g-element.html - "g" element explanation
+			.attr('class','chart');
+
+      /*
+        End of D3 code
+        Start of Dimple.js Chart construction code
+      */
+        var myChart = new dimple.chart(svg, data);
+
+		var x = myChart.addCategoryAxis("x", "crime");
+
+        var y = myChart.addMeasureAxis("y", year);
+
+        var series = myChart.addSeries(null, dimple.plot.bar);
+		//var series = myChart.addSeries(null, dimple.plot.scatter);
+
+
+		myChart.draw();
+        };
+      </script>
+  </head>
+<body>
+	<H1 id="CurrentYear" style="text-align:center;">2008</h1>
+  <p style="text-align:center;"><a href="index.html">Drilldown for 2018</a></p>
+
+	<script type="text/javascript">
+		d3.tsv("crime.txt", draw);
+	</script>
+	 <button onclick="nextYear()">Next -></button>
+	 <button onclick="autoPlay()">Auto Play</button>
+	 <button onclick="stopTimer()">Stop</button>
+</body>
+</html>

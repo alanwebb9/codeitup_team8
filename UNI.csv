@@ -1,0 +1,16 @@
+region,gender,count
+All,Female,117705
+All,Male,159495
+All,Total,277480
+England,Female,95535
+England,Male,128705
+England,Total,224415
+Northern Ireland,Female,2315
+Northern Ireland,Male,3260
+Northern Ireland,Total,5580
+Scotland,Female,13340
+Scotland,Male,17320
+Scotland,Total,30730
+Wales,Female,6515
+Wales,Male,10230
+Wales,Total,16750
