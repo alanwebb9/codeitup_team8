@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+<!--   D3 is always loaded before dimple as dimple is built on top of D3/references D3 funcctions
+  here we are referencing the javascript files that are available on the web
+  if you do not have web access you will have to reference the files in your project sfile structure as we did in the first tutorial -->
+  <script src="http://d3js.org/d3.v3.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.0.0.js"></script>
+
+    <script type="text/javascript">
+      function draw(data) {
+  		"use strict";
+
+
+  		if(svg !== null)
+  		{
+  			d3.select("svg").remove();
+  		}
+
+
+  		var margin = 75, width = 1400/2 - margin, height = 750/2 - margin;
+
+           //svg element to page
+        var svg = d3.select("body")
+            .append("svg")
+			      .attr("width", width + margin)
+            .attr("height", height + margin)
+            .append('g')//http://tutorials.jenkov.com/svg/g-element.html - "g" element explanation
+			      .attr('class','chart')
+            .attr('id', '1');
+
+
+
+        /*
+          End of D3 code
+          Start of Dimple.js Chart construction code
+        */
+        var mf = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].Ethnicity == "All pupils") {
+            if (data[i].FSM == "All Pupils") {
+              if (data[i].SEN == "All Pupils") {
+                if (data[i].Type_of_school == "All state-funded schools") {
+                  if (data[i].Religious_character == "All Pupils") {
+                    if (data[i].Gender == "Boys") {
+                        mf.push({"Gender":"Male", "Result":data[i].Value , "Total":data[i].Denominator});
+                    }else if (data[i].Gender == "Girls") {
+                        mf.push({"Gender":"Female", "Result":data[i].Value , "Total":data[i].Denominator});
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+
+
+
+        var mfsplit = new dimple.chart(svg, mf);
+
+		    var x = mfsplit.addCategoryAxis("x", "Gender");
+
+        var y = mfsplit.addMeasureAxis("y", "Total");
+
+        var series = mfsplit.addSeries("Channel", dimple.plot.bar);
+        mfsplit.draw();
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin)
+            .attr("height", height + margin)
+            .append('g')//http://tutorials.jenkov.com/svg/g-element.html - "g" element explanation
+            .attr('class','chart')
+            .attr('id', '2');
+
+        var mfsplitR = new dimple.chart(svg, mf);
+
+		    var x = mfsplitR.addCategoryAxis("x", "Gender");
+
+        var y = mfsplitR.addMeasureAxis("y", "Result");
+
+        var series = mfsplitR.addSeries("Channel", dimple.plot.bar);
+
+        mfsplitR.defaultColors = [
+             new dimple.color("#e17055", 1), // blue
+       ];
+  		//var series = myChart.addSeries(null, dimple.plot.scatter);
+
+        mfsplitR.draw();
+
+        var ethWhite = [];
+        var ethAsian = [];
+
+        var allEths = [];
+
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].FSM == "All Pupils") {
+            if (data[i].SEN == "All Pupils") {
+              if (data[i].Type_of_school == "All state-funded schools") {
+                if (data[i].Religious_character == "All Pupils") {
+                  if (data[i].Ethnicity == "White"){
+                    if (data[i].Gender == "All Pupils") {
+                      allEths.push({"Ethnicity":"White","Result":data[i].Value, "Total":data[i].Denominator});
+                    }
+                    if (data[i].Gender == "Boys") {
+                      ethWhite.push({"Gender":"Male", "Result":data[i].Value  ,"Total":data[i].Denominator});
+                    }else if (data[i].Gender == "Girls") {
+                      ethWhite.push({"Gender":"Female", "Result":data[i].Value  ,"Total":data[i].Denominator});
+                    }
+                }else if (data[i].Ethnicity == "Asian") {
+                  if (data[i].Gender == "All Pupils") {
+                    allEths.push({"Ethnicity":"Asian","Result":data[i].Value, "Total":data[i].Denominator});
+                  }
+                  if (data[i].Gender == "Boys") {
+                    ethAsian.push({"Gender":"Male", "Result":data[i].Value  ,"Total":data[i].Denominator});
+                  }else if (data[i].Gender == "Girls") {
+                    ethAsian.push({"Gender":"Female", "Result":data[i].Value  ,"Total":data[i].Denominator});
+                  }
+                }else if (data[i].Ethnicity == "Black") {
+                  if (data[i].Gender == "All Pupils") {
+                    allEths.push({"Ethnicity":"Black","Result":data[i].Value, "Total":data[i].Denominator});
+                  }
+                }else if (data[i].Ethnicity == "Chinese") {
+                  if (data[i].Gender == "All Pupils") {
+                    allEths.push({"Ethnicity":"Chinese","Result":data[i].Value, "Total":data[i].Denominator});
+                  }
+                }else if (data[i].Ethnicity == "Mixed") {
+                  if (data[i].Gender == "All Pupils") {
+                    allEths.push({"Ethnicity":"Mixed","Result":data[i].Value, "Total":data[i].Denominator});
+                  }
+                }else if (data[i].Ethnicity == "Other - Any Other") {
+                  if (data[i].Gender == "All Pupils") {
+                    allEths.push({"Ethnicity":"Other","Result":data[i].Value, "Total":data[i].Denominator});
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      debugger;
+      var svg = d3.select("body")
+          .append("svg")
+          .attr("width", width + margin)
+          .attr("height", height + margin)
+          .append('g')//http://tutorials.jenkov.com/svg/g-element.html - "g" element explanation
+          .attr('class','chart')
+          .attr('id', '3');
+
+        var ethsplit = new dimple.chart(svg, ethWhite);
+
+        var x = ethsplit.addCategoryAxis("x", "Gender");
+        var y = ethsplit.addMeasureAxis("y", "Total");
+        var series = ethsplit.addSeries(null, dimple.plot.bar);
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin)
+            .attr("height", height + margin)
+            .append('g')//http://tutorials.jenkov.com/svg/g-element.html - "g" element explanation
+            .attr('class','chart')
+            .attr('id', '4');
+
+        var ethsplitWhiteResult = new dimple.chart(svg, ethWhite);
+
+        var x = ethsplitWhiteResult.addCategoryAxis("x", "Gender");
+
+        var y = ethsplitWhiteResult.addMeasureAxis("y", "Result");
+
+        var series = ethsplitWhiteResult.addSeries("Channel", dimple.plot.bar);
+        ethsplitWhiteResult.defaultColors = [
+             new dimple.color("#e17055", 1), // blue
+       ];
+        //var series = myChart.addSeries(null, dimple.plot.scatter);
+
+        ethsplitWhiteResult.draw();
+
+
+
+
+
+
+        ethsplit.draw();
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin)
+            .attr("height", height + margin)
+            .append('g')//http://tutorials.jenkov.com/svg/g-element.html - "g" element explanation
+            .attr('class','chart')
+            .attr('id', '5');
+
+          var ethsplitA = new dimple.chart(svg, ethAsian);
+
+          var x = ethsplitA.addCategoryAxis("x", "Gender");
+          var y = ethsplitA.addMeasureAxis("y", "Total");
+          var series = ethsplitA.addSeries(null, dimple.plot.bar);
+
+          ethsplitA.draw();
+
+
+          var svg = d3.select("body")
+              .append("svg")
+              .attr("width", width + margin)
+              .attr("height", height + margin)
+              .append('g')//http://tutorials.jenkov.com/svg/g-element.html - "g" element explanation
+              .attr('class','chart')
+              .attr('id', '6');
+
+          var ethsplitAsianResult = new dimple.chart(svg, ethAsian);
+
+          var x = ethsplitAsianResult.addCategoryAxis("x", "Gender");
+
+          var y = ethsplitAsianResult.addMeasureAxis("y", "Result");
+
+          var series = ethsplitAsianResult.addSeries("Channel", dimple.plot.bar);
+
+          ethsplitAsianResult.defaultColors = [
+               new dimple.color("#e17055", 1), // blue
+         ];
+
+
+          //var series = myChart.addSeries(null, dimple.plot.scatter);
+
+          ethsplitAsianResult.draw();
+
+          var svg = d3.select("body")
+              .append("svg")
+              .attr("width", width + margin)
+              .attr("height", height + margin)
+              .append('g')//http://tutorials.jenkov.com/svg/g-element.html - "g" element explanation
+              .attr('class','chart')
+              .attr('id', '7');
+
+              var allEthsResult = new dimple.chart(svg, allEths);
+
+              var x = allEthsResult.addCategoryAxis("x", "Ethnicity");
+
+              var y = allEthsResult.addMeasureAxis("y", "Result");
+
+              var series = allEthsResult.addSeries("Channel", dimple.plot.bar);
+              allEthsResult.defaultColors = [
+                   new dimple.color("#e17055", 1), // blue
+             ];
+              //var series = myChart.addSeries(null, dimple.plot.scatter);
+
+              allEthsResult.draw();
+
+
+        };
+      </script>
+  </head>
+<body>
+
+	<script type="text/javascript">
+		d3.csv("http://127.0.0.1/JNJ2020/assets/data/gcse.csv", draw);
+	</script>
+</body>
+</html>

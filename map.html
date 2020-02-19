@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.0.0.js"></script>
+  <script type="text/javascript">
+
+
+    // number rounding function - user Aleha on Stackoverflow
+    function aleha(num, _prec) {
+      var precalculatedPrecisions = [1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10];
+      _precision = precalculatedPrecisions[_prec]
+      return Math.round(num * _precision + 1e-14) / _precision;
+    }
+    function getPop(name){
+      switch (name) {
+        case "Wales":
+          break;
+          case "Wales":
+            break;
+            case "Wales":
+              break;
+              case "Wales":
+                break;
+                
+
+        default:
+
+      }
+    }
+
+    //margin for display
+    var margin = 75,
+      width = 650 - margin,
+      height = 800 - margin;
+
+    //draw map
+    function draw(geo_data) {
+      if (svg !== null) {
+        d3.select("#mapsvg").remove();
+        d3.select("#chartsvg").remove();
+        d3.select(".tooltip").remove();
+      }
+
+      "use strict";
+      //debugger;
+      var svg = d3.select(".mapHolder")
+        .append("svg")
+        .attr("width", width + margin)
+        .attr("height", height + margin)
+        .attr("id", "mapsvg")
+        .append('g')
+        .attr('class', 'map');
+
+        var tooltip = d3.select("body").append("div")
+          .attr("class", "tooltip")
+          .style("opacity", 0);
+
+
+      //get projection function for mercator
+      var merc_projection = d3.geo.mercator()
+        .center([2, 56])
+        .scale(2200); //zoom
+      //.translate([width/1.5,height/1.25])//centre
+
+      var path = d3.geo.path().projection(merc_projection);
+      debugger;
+      var map = svg.selectAll('path')
+        .data(geo_data.features)
+        .enter()
+        .append('path')
+        .attr('d', path)
+        .on("mousemove",function(d)
+      {
+        tooltip.transition()
+        .duration(150)
+        .style("opacity",1);
+        tooltip.html("<p>" + d.properties.NAME + "<p>" + "<p>" + getPop(d.properties.NAME) + "<p>")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - 28) + "px");
+      })  .on("mouseout", function(d) {
+          tooltip.transition()
+            .duration(500)
+            .style("opacity", 0);
+        })
+        .on("click", function(d) {
+          debugger;
+                  //reload dimple chart with new data set
+                  //buildDataForChart(d.properties.NAME_1);
+                  console.log(d.properties.NAME);
+                  d3.event.stopPropagation();
+                })
+        .style('fill',function(d){
+          //check for wales
+          if (d.properties.NAME=="Wales") {
+            return 'grey';
+          }
+          //Ireland
+          else if (d.properties.NAME=="Ireland") {
+            return 'lightgrey'
+          }
+          //NorthIreland
+          else if (d.properties.NAME=="N. Ireland") {
+            return 'grey'
+          }
+          //England
+          else if (d.properties.NAME=="England") {
+            return 'grey'
+          }
+          //Scotland
+          else if (d.properties.NAME=="Scotland") {
+            return 'grey'
+          }
+        });
+    };
+  </script>
+  <style media="screen">
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 80px;
+    height: 75px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: #232020;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ff7315;
+    border-radius: 5px;
+    pointer-events: none;
+  }
+
+  div.tooltip p {
+    color: #f4f4f4;
+  }
+  </style>
+</head>
+
+<body>
+  <script type="text/javascript">
+    d3.json("small.geojson", draw);
+  </script>
+  <div class="mapHolder">
+    <div id="mapsvg"></div>
+  </div>
+</body>
+</html>
