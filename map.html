@@ -17,14 +17,18 @@
     function getPop(name){
       switch (name) {
         case "Wales":
+        return "4.7% | 24,127"
           break;
-          case "Wales":
-            break;
-            case "Wales":
+            case "N. Ireland":
+                    return "2.8% | 14,373"
               break;
-              case "Wales":
+              case "England":
+                      return "84.3% | 432,759"
                 break;
-                
+                case "Scotland":
+                        return "8.2% | 42,095"
+                  break;
+
 
         default:
 
@@ -95,23 +99,23 @@
         .style('fill',function(d){
           //check for wales
           if (d.properties.NAME=="Wales") {
-            return 'grey';
+            return '#333';
           }
           //Ireland
           else if (d.properties.NAME=="Ireland") {
-            return 'lightgrey'
+            return 'black'
           }
           //NorthIreland
           else if (d.properties.NAME=="N. Ireland") {
-            return 'grey'
+            return '#666'
           }
           //England
           else if (d.properties.NAME=="England") {
-            return 'grey'
+            return '#999'
           }
           //Scotland
           else if (d.properties.NAME=="Scotland") {
-            return 'grey'
+            return '#CCC'
           }
         });
     };

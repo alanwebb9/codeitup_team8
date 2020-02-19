@@ -283,20 +283,15 @@ table.dataTable {
                   <h1 class="text-uppercase">Welcome to J&amp;J 2020 Hackathon</h1>
               </div>
               <div class="welcome-description">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <p>The corolation between STEM studies and continuation of 3rd level studiers after GCSE gradtion.Our project takes open data from data.gov.uk about the GCSE maths and english results with data fields for Ethnicity, Gender, Religion and few more, as well as this data we have data from the number of first year college students doing a course relating to stem. Using this data we can create a story for students.</p>
               </div>
               <div class="action mt-5">
                 <div class="action-primary-btn mt-3">
-                    <a href="http://localhost/JNJ2020/map.html" class="btn btn-primary btn-lg">Analytics</a>
+                    <a href="http://localhost/JNJ2020/map.html" class="btn btn-primary btn-lg">Map</a>
                 </div>
                 <div class="action-secondary-btn mt-3">
                     <p class="d-none">Get more insight into the dataset</p>
-                    <a href="http://localhost/JNJ2020/charts.html" class="btn btn-secondary btn-sm">Graphs</a>
+                    <a href="http://localhost/JNJ2020/charts.html" class="btn btn-secondary btn-sm">Analytics</a>
                 </div>
               </div>
           </div>
